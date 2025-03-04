@@ -20,7 +20,7 @@ HashiCorp Boundary is an identity-based access management tool that securely con
 * Install Docker 
 
 
-![title](./images/dockerlab_v1.png)
+![title](./images/lab_architecture.png)
 
 # Steps Build Boundary Docker Worker (local machine)
 Create a root folder for your HCP Boundary Docker, inside that folder create the following docker-compose.yml and volume file structure.
@@ -62,7 +62,7 @@ docker-compose up -d
 
 2. When the docker is online, grab the worker token.
 
-![title](./images/dockerhcp.png)
+![title](./images/hcp_worker.png)
 
 3. Next, in your CLI export the token
 
@@ -106,6 +106,13 @@ chmod +x ./start.sh
 ./start.sh
 ```
 
+## Step 4: Run the below scripts to deploy the users and user groups and policies.
+* The script will deploy the One user in global scope and three users in Org scope and it will assign the role and projects to each users.
+* Execute the command to configure the users and user groups and roles.
+
+```
+./u_deploy.sh
+```
 
 ## Step 5: Test it out
 You should already be authenticate, but you can authenticate again.  
@@ -137,4 +144,7 @@ boundary connect postgres -target-name="Postgres DB" -target-scope-name="Docker 
 ## How to destroy your environment
 To clean up your environment run the following script
 1. ``` chmod +x ./destroy.sh ```
-3. Execute ``` ./destory.sh  ```
+2. Execute ``` ./destory.sh  ```
+3. ``` chmod +x ./destroy.sh ```
+4. Execute ``` ./u-destroy ```
+
