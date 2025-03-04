@@ -22,7 +22,7 @@ HashiCorp Boundary is an identity-based access management tool that securely con
 * Once boundary deployed successfuly you will be able to see the cluster url to login into your boundary account with your creds.
 
 # Boundary Usecases
-* USECASE-1: Configure SSH connectio
+USECASE-1: Configure SSH connectio
   1. Deploy the Linux server on the docker container
   2. Configure the hashicorp vault and store the username and private key in Vault kv path
   3. Configure the boundary target
