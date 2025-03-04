@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+  boundary-hcp-worker:
+    image: hashicorp/boundary-enterprise
+    container_name: boundary-hcp-worker
+    ports:
+      - "9204:9204"
+      - "9202:9202"
+    restart: always
+    volumes:
+      - ./config/boundary/config:/boundary-hcp-worker/config
+      - ./config/boundary/logs:/boundary-hcp-worker/logs
+      - ./config/boundary/file:/boundary-hcp-worker/file
+      - ./config/boundary/file:/boundary-hcp-worker/recording
+    cap_add:
+      - IPC_LOCK
+    entrypoint: boundary server -config=/boundary-hcp-worker/config/config.hcl
+
+  vault:
+    image: hashicorp/vault
+    container_name: vault
+    ports:
+      - "8200:8200"
+    restart: always
+    volumes:
+      - ./config/vault/logs:/vault/logs
+      - ./config/vault/file:/vault/file
+      - ./config/vault/config:/vault/config
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault.hcl
+
+
+  openssh-server:
+    image: lscr.io/linuxserver/openssh-server:latest
+    container_name: openssh-win-server
+    hostname: openssh-win-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - PUBLIC_KEY_FILE=/keys/openssh-key.pub
+      - SUDO_ACCESS=false
+      - USER_NAME=admin
+    volumes:
+      - ./config/openssh/:/keys
+    ports:
+      - 2222:2222
+    restart: unless-stopped
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: dbroot
+      POSTGRES_DB: database
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
