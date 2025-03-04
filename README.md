@@ -11,6 +11,7 @@ HashiCorp Boundary is an identity-based access management tool that securely con
 * HCP Boundary Cloud account with running boundary instances
 * Docker & Docker-compose installed in your docker
 * Install Kind in your local for Kubernetes cluster deployment
+* Deploy the boundary worker
 * Deploy the Openssl on docker container
 * Deploy the Vault on docker container
 * Deploy the kubernetes on docker container
@@ -21,13 +22,29 @@ HashiCorp Boundary is an identity-based access management tool that securely con
 * Once boundary deployed successfuly you will be able to see the cluster url to login into your boundary account with your creds.
 
 # Boundary Usecases
-* USECASE1:
+* USECASE-1: Configure SSH connectio
   1. Deploy the Linux server on the docker container
   2. Configure the hashicorp vault and store the username and private key in Vault kv path
   3. Configure the boundary target
   4. Configure the Credential store to get the creds from the Hahsicorp Vault
   5. login to the boundary desktop client/ cli to access the targets
-  6. Connect to the endpoint.
+  6. Connect to Linux server using SSH creds.
+
+USECASE-2: Configure postgres sql connection
+  1. Deploy the postgres DB on the docker container
+  2. Configure the hashicorp vault. enable the databse secret engine to configure dynamic cerds for postgres DB
+  3. Configure the boundary target
+  4. Configure the Credential store to get the dynamic creds from the Hahsicorp Vault
+  5. login to the boundary desktop client/ cli to access the targets
+  6. Connect to postgres DB with dynamic creds.
+
+USECASE-3: Configure Kubernetes endpoint connection
+  1. Deploy the Kubernetes cluster on the docker container
+  2. Configure the hashicorp vault. enable the kubernetes secret engine to fetch the dynamic cerds for kubernetes clusters
+  3. Configure the boundary target
+  4. Configure the Credential store to get the dynamic creds from the Hahsicorp Vault
+  5. login to the boundary desktop client/ cli to access the targets
+  6. Connect to Kubernetes workloads with dynamic creds.
 
 # Install the Docker, Docker-compose and kind
 * Install Kind on your machine https://kind.sigs.k8s.io/docs/user/quick-start/
